@@ -6,27 +6,33 @@ namespace Lab1T1.Model
 {
     public class Shape
     {
+        public Point upLeft;
+        public Point downRight;
         public DateTime timeCreate;
+        public float thickness;
+        public Color userChoose;
         public virtual void Draw(OpenGLControl glControl)
         {
-            glControl.OpenGL.Color(0, 0, 0, 0);
-            //Có thể sẽ đưa mã màu vào
-            //Có thể sẽ đưa độ đậm nhạt vào
+            var gl = glControl.OpenGL;
+            gl.Color(0, 0, 0, 0);
+            gl.LineWidth(thickness);
+            gl.Color(userChoose.R / 255.0, userChoose.G / 255.0, userChoose.B / 255.0);
         }
     }
 
     public class Rectangel : Shape
     {
-        public Point upLeft;
-        public Point downRight;
-        public Rectangel(Point upLeft, Point downRight)
+        public Rectangel(Point upLeft, Point downRight, float thickness, Color userChoose)
         {
             this.upLeft = upLeft;
             this.downRight = downRight;
+            this.thickness = thickness;
+            this.userChoose = userChoose;
         }
 
         public override void Draw(OpenGLControl glControl)
         {
+            base.Draw(glControl);
             timeCreate = DateTime.Now;
             var gl = glControl.OpenGL;
             gl.Begin(OpenGL.GL_LINE_LOOP);
@@ -34,43 +40,51 @@ namespace Lab1T1.Model
             gl.Vertex(upLeft.X, glControl.Height - downRight.Y);
             gl.Vertex(downRight.X, glControl.Height - downRight.Y);
             gl.Vertex(downRight.X, glControl.Height - upLeft.Y);
-
+            gl.End();
         }
     }
 
     public class Line : Shape
     {
-        public Point start;
-        public Point end;
-
+        public Line(Point a, Point b, float thickness, Color userChoose)
+        {
+            upLeft = a;
+            downRight = b;
+            this.thickness = thickness;
+            this.userChoose = userChoose;
+        }
         public override void Draw(OpenGLControl glControl)
         {
+            base.Draw(glControl);
             timeCreate = DateTime.Now;
             var gl = glControl.OpenGL;
             gl.Begin(OpenGL.GL_LINES);
-            gl.Vertex(start.X, start.Y);
-            gl.Vertex(end.X, end.Y);
+            gl.Vertex(upLeft.X, glControl.Height - upLeft.Y);
+            gl.Vertex(downRight.X, glControl.Height - downRight.Y);
+            gl.End();
         }
     }
 
     public class Eclipse : Shape
     {
-        public Point upLeft;
-        public Point downRight;
         public Point center;
         public double radiusX;
         public double radiusY;
         public Eclipse() { radiusX = -1; radiusY = -1; }
-        public Eclipse(Point a, Point b)
+        public Eclipse(Point a, Point b, float thickness, Color userChoose)
         {
             upLeft = a;
             downRight = b;
             radiusX = -1;
             radiusY = -1;
+            this.thickness = thickness;
+            this.userChoose = userChoose;
         }
 
         public void FindRadius()
         {
+            center.X = (upLeft.X + downRight.X) / 2;
+            center.Y = (upLeft.Y + downRight.Y) / 2;
             if (radiusX == -1 || radiusY == -1)
             {
                 var midX = new Point(upLeft.X, (upLeft.Y + downRight.Y) / 2);
@@ -84,10 +98,9 @@ namespace Lab1T1.Model
 
         public override void Draw(OpenGLControl glControl)
         {
-            center.X = (upLeft.X + downRight.X) / 2;
-            center.Y = (upLeft.Y + downRight.Y) / 2;
-            center.Y = glControl.Height - center.Y;
+            base.Draw(glControl);
             FindRadius();
+            center.Y = glControl.Height - center.Y;
             var gl = glControl.OpenGL;
             gl.Begin(OpenGL.GL_LINE_LOOP);
             for (int i = 0; i < 360; i++)
@@ -95,21 +108,22 @@ namespace Lab1T1.Model
                 double rad = i * Math.PI / 180;
                 gl.Vertex(center.X + radiusX * Math.Cos(rad), center.Y + radiusY * Math.Sin(rad));
             }
+            gl.End();
         }
     }
 
     public class Circle : Shape
     {
-        public Point upLeft;
-        public Point downRight;
-        public Circle(Point a, Point b)
+        public Circle(Point a, Point b, float thickness, Color userChoose)
         {
             upLeft = a;
             downRight = b;
+            this.thickness = thickness;
+            this.userChoose = userChoose;
         }
         public override void Draw(OpenGLControl glControl)
         {
-            var eclip = new Eclipse(upLeft, downRight);
+            var eclip = new Eclipse(upLeft, downRight, thickness, userChoose);
             eclip.FindRadius();
             if (eclip.radiusX > eclip.radiusY)
             {
@@ -119,8 +133,37 @@ namespace Lab1T1.Model
             {
                 eclip.radiusY = eclip.radiusX;
             }
-
             eclip.Draw(glControl);
+        }
+    }
+
+    public class EquilateralTriangle : Shape
+    {
+        public EquilateralTriangle(Point a, Point b, float thickness, Color userChoose)
+        {
+            upLeft = a;
+            downRight = b;
+            this.thickness = thickness;
+            this.userChoose = userChoose;
+        }
+        public override void Draw(OpenGLControl glControl)
+        {
+            base.Draw(glControl);
+            var gl = glControl.OpenGL;
+
+            gl.Begin(OpenGL.GL_LINE_LOOP);
+            gl.Vertex(upLeft.X, glControl.Height - downRight.Y);
+            gl.Vertex(downRight.X, glControl.Height - downRight.Y);
+            double tmpUpleftY;
+            var tmp1 = downRight.Y + Math.Abs(((downRight.X + upLeft.X) / 2 - upLeft.X) * Math.Sqrt(3));
+            var tmp2 = downRight.Y - Math.Abs(((downRight.X + upLeft.X) / 2 - upLeft.X) * Math.Sqrt(3));
+            if (Math.Abs(tmp1 - upLeft.Y) > Math.Abs(tmp2 - upLeft.Y))
+            {
+                tmpUpleftY = tmp2;
+            }
+            else tmpUpleftY = tmp1;
+            gl.Vertex((downRight.X + upLeft.X) / 2, glControl.Height - tmpUpleftY);
+            gl.End();
         }
     }
 }

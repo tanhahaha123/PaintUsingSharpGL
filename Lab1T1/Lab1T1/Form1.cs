@@ -1,6 +1,7 @@
 ﻿using Lab1T1.Model;
 using SharpGL;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -12,16 +13,25 @@ namespace Lab1T1
         static float thickness = 1.0f;
         static Point start = new Point(-1, -1), end, tmpStart = start;
         static bool isDown = false;
+        static Stack<Shape> listDraw = new Stack<Shape>();
+        static int chooseImg = -1;
+        //chooseImg = 0 -> Line
+        //          = 1 -> Circle
+        //          = 2 -> Eclipse
+        //          = 3 -> Recangle
+        //          = 4 -> EquilateralTriangle
+        //          = 5 -> Ngũ giác đều
+        //          = 6 -> Lục giác đều
+
+        static Shape imgToDraw;
+
         public Form1()
         {
+            listDraw.Clear();
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Hàm khởi tạo của OpenGL
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void openGLControl1_OpenGLInitialized(object sender, EventArgs e)
         {
             OpenGL gl = openGLControl.OpenGL;
@@ -31,11 +41,7 @@ namespace Lab1T1
             gl.LoadIdentity();
         }
 
-        /// <summary>
-        /// Hàm xử lý khi resize vùng vẽ
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void openGLControl1_Resized(object sender, EventArgs e)
         {
             OpenGL gl = openGLControl.OpenGL;
@@ -45,11 +51,7 @@ namespace Lab1T1
             gl.Ortho2D(0, openGLControl.Width, 0, openGLControl.Height);
         }
 
-        /// <summary>
-        /// Hàm vẽ trên OpenGL
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
+
         private void openGLControl1_OpenGLDraw(object sender, SharpGL.RenderEventArgs args)
         {
             OpenGL gl = openGLControl.OpenGL;
@@ -59,24 +61,59 @@ namespace Lab1T1
             //Lấy màu
             gl.Color(userChoose.R / 255.0, userChoose.G / 255.0, userChoose.B / 255.0, userChoose.A / 255.0);
             //Lấy độ đậm
-            if (float.TryParse(textBoxThickness.Text, out thickness))
+            if (!float.TryParse(textBoxThickness.Text, out thickness))
             {
-                gl.LineWidth(thickness);
+                thickness = 1.0f;
             }
-            else gl.LineWidth(1.0f);
 
-            Circle a = new Circle(start, end);
-            a.Draw(openGLControl);
+            //Xem lựa chọn của user và chọn hinh vẽ
 
+            switch (chooseImg)
+            {
+                case 0:
+                    imgToDraw = new Line(start, end, thickness, userChoose);
+                    break;
+                case 1:
+                    imgToDraw = new Circle(start, end, thickness, userChoose);
+                    break;
+                case 2:
+                    imgToDraw = new Eclipse(start, end, thickness, userChoose);
+                    break;
+                case 3:
+                    imgToDraw = new Rectangel(start, end, thickness, userChoose);
+                    break;
+                case 4:
+                    imgToDraw = new EquilateralTriangle(start, end, thickness, userChoose);
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+            }
+
+            while (listDraw.Count != 0)
+            {
+                var tmpCheck = listDraw.Pop();
+                if (tmpCheck.upLeft.X != start.X || tmpCheck.upLeft.Y != start.Y)
+                {
+                    listDraw.Push(tmpCheck);
+                    break;
+                }
+            }
+            if (imgToDraw != null)
+            {
+                listDraw.Push(imgToDraw);
+            }
+
+            foreach (var x in listDraw)
+            {
+                x.Draw(openGLControl);
+            }
             gl.End();
             gl.Flush();
         }
 
-        /// <summary>
-        /// Click vào button chọn màu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
@@ -85,11 +122,7 @@ namespace Lab1T1
             }
         }
 
-        /// <summary>
-        /// Xử lý khi thả chuột ra
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void openGLControl_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
@@ -97,11 +130,36 @@ namespace Lab1T1
             tmpStart = start;
         }
 
-        /// <summary>
-        /// Xử lý khi vừa nhấn chuột vừa di chuyển chuột
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        private void button2_Click(object sender, EventArgs e)
+        {
+            chooseImg = 0;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            chooseImg = 1;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            chooseImg = 2;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            chooseImg = 3;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            chooseImg = 4;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            chooseImg = 5;
+        }
+
         private void openGLControl_MouseMove(object sender, MouseEventArgs e)
         {
             if (isDown == true)
@@ -110,11 +168,7 @@ namespace Lab1T1
             }
         }
 
-        /// <summary>
-        /// Hàm xử lý khi click chuột
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void openGLControl_MouseDown(object sender, MouseEventArgs e)
         {
             start = e.Location;
