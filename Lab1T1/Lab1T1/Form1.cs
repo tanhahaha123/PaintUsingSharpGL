@@ -11,10 +11,9 @@ namespace Lab1T1
     {
         static Color userChoose = Color.Black;
         static float thickness = 1.0f;
-        static Point start = new Point(-1, -1), end, tmpStart = start;
+        static Point start, end;
         static bool isDown = false;
         static Stack<Shape> listDraw = new Stack<Shape>();
-        static int chooseImg = -1;
         //chooseImg = 0 -> Line
         //          = 1 -> Circle
         //          = 2 -> Eclipse
@@ -22,6 +21,7 @@ namespace Lab1T1
         //          = 4 -> EquilateralTriangle
         //          = 5 -> Ngũ giác đều
         //          = 6 -> Lục giác đều
+        static int chooseImg = -1;
 
         static Shape imgToDraw;
 
@@ -109,7 +109,6 @@ namespace Lab1T1
             {
                 x.Draw(openGLControl);
             }
-            gl.End();
             gl.Flush();
         }
 
@@ -127,37 +126,31 @@ namespace Lab1T1
         {
             isDown = false;
             end = e.Location;
-            tmpStart = start;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Line_CheckedChanged(object sender, EventArgs e)
         {
             chooseImg = 0;
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void circle_CheckedChanged(object sender, EventArgs e)
         {
             chooseImg = 1;
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void eclipse_CheckedChanged(object sender, EventArgs e)
         {
             chooseImg = 2;
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void rectangle_CheckedChanged(object sender, EventArgs e)
         {
             chooseImg = 3;
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void equlateral_CheckedChanged(object sender, EventArgs e)
         {
             chooseImg = 4;
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            chooseImg = 5;
         }
 
         private void openGLControl_MouseMove(object sender, MouseEventArgs e)

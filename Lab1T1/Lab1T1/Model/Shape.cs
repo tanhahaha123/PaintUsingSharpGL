@@ -100,13 +100,13 @@ namespace Lab1T1.Model
         {
             base.Draw(glControl);
             FindRadius();
-            center.Y = glControl.Height - center.Y;
+            var tmpCenterY = glControl.Height - center.Y;
             var gl = glControl.OpenGL;
             gl.Begin(OpenGL.GL_LINE_LOOP);
-            for (int i = 0; i < 360; i++)
+            for (double i = 0; i < 360; i += 0.1)
             {
                 double rad = i * Math.PI / 180;
-                gl.Vertex(center.X + radiusX * Math.Cos(rad), center.Y + radiusY * Math.Sin(rad));
+                gl.Vertex(center.X + radiusX * Math.Cos(rad), tmpCenterY + radiusY * Math.Sin(rad));
             }
             gl.End();
         }
@@ -114,26 +114,63 @@ namespace Lab1T1.Model
 
     public class Circle : Shape
     {
+        private static Point start, center, tmp;
+        private static long x2, y2;
+        private static double p;
+        private static int radius;
+
         public Circle(Point a, Point b, float thickness, Color userChoose)
         {
             upLeft = a;
             downRight = b;
             this.thickness = thickness;
             this.userChoose = userChoose;
+            center = new Point((a.X + b.X) / 2, (a.Y + b.Y) / 2);
+            double tmpRadius = Math.Sqrt(Math.Pow(a.X - center.X, 2) + Math.Pow(a.Y - center.Y, 2));
+            string tmpRStr = ((int)tmpRadius).ToString();
+            radius = int.Parse(tmpRStr);
+            start = new Point(0, radius);
+            x2 = 0; y2 = 2 * radius;
+            p = 5 / 4 - double.Parse(tmpRStr.ToString());
         }
         public override void Draw(OpenGLControl glControl)
         {
-            var eclip = new Eclipse(upLeft, downRight, thickness, userChoose);
-            eclip.FindRadius();
-            if (eclip.radiusX > eclip.radiusY)
+            base.Draw(glControl);
+            int k = 0;
+            var gl = glControl.OpenGL;
+            gl.PointSize(thickness);
+            gl.Begin(OpenGL.GL_POINTS);
+            while (true)
             {
-                eclip.radiusX = eclip.radiusY;
+                //Bug tại vì Sau khi chạy vòng lặp xong thì start.X >= start.Y rồi. Gán thì có cái hình vuông ở trong :O
+                if (start.X >= start.Y)
+                {
+                    gl.End();
+                    return;
+                }
+                //Vẽ điểm cũ,  và 7 điểm đối xứng của nó
+                gl.Vertex(center.X - start.X, glControl.Height - (center.Y - start.Y));
+                gl.Vertex(center.X + start.X, glControl.Height - (center.Y + start.Y));
+                gl.Vertex(center.X - start.X, glControl.Height - (center.Y + start.Y));
+                gl.Vertex(center.X + start.X, glControl.Height - (center.Y - start.Y));
+                gl.Vertex(center.X + start.Y, glControl.Height - (center.Y + start.X));
+                gl.Vertex(center.X - start.Y, glControl.Height - (center.Y + start.X));
+                gl.Vertex(center.X + start.Y, glControl.Height - (center.Y - start.X));
+                gl.Vertex(center.X - start.Y, glControl.Height - (center.Y - start.X));
+                start.X++;
+                x2 = x2 + 2;
+                if (p < 0)
+                {
+                    p = p + x2 + 1;
+                }
+                else
+                {
+                    start.Y--;
+                    y2 = y2 - 2;
+                    p = p + x2 - y2 + 1;
+                }
+                k++;
             }
-            else
-            {
-                eclip.radiusY = eclip.radiusX;
-            }
-            eclip.Draw(glControl);
         }
     }
 
@@ -161,7 +198,11 @@ namespace Lab1T1.Model
             {
                 tmpUpleftY = tmp2;
             }
-            else tmpUpleftY = tmp1;
+            else
+            {
+                tmpUpleftY = tmp1;
+            }
+                
             gl.Vertex((downRight.X + upLeft.X) / 2, glControl.Height - tmpUpleftY);
             gl.End();
         }

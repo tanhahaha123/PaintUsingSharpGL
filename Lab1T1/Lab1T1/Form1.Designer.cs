@@ -33,12 +33,13 @@
             this.button1 = new System.Windows.Forms.Button();
             this.textBoxThickness = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
+            this.Line = new System.Windows.Forms.RadioButton();
+            this.circle = new System.Windows.Forms.RadioButton();
+            this.eclipse = new System.Windows.Forms.RadioButton();
+            this.rectangle = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.equilateralTriangle = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
             this.SuspendLayout();
             // 
@@ -85,77 +86,93 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Nhập Font-size";
             // 
-            // button2
+            // Line
             // 
-            this.button2.Location = new System.Drawing.Point(338, 19);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(29, 29);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.Line.AutoSize = true;
+            this.Line.Location = new System.Drawing.Point(373, 19);
+            this.Line.Name = "Line";
+            this.Line.Size = new System.Drawing.Size(50, 18);
+            this.Line.TabIndex = 4;
+            this.Line.Text = "Line";
+            this.Line.UseVisualStyleBackColor = true;
+            this.Line.CheckedChanged += new System.EventHandler(this.Line_CheckedChanged);
             // 
-            // button3
+            // circle
             // 
-            this.button3.Location = new System.Drawing.Point(338, 54);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(28, 26);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.circle.AutoSize = true;
+            this.circle.Location = new System.Drawing.Point(373, 43);
+            this.circle.Name = "circle";
+            this.circle.Size = new System.Drawing.Size(59, 18);
+            this.circle.TabIndex = 5;
+            this.circle.Text = "Circle";
+            this.circle.UseVisualStyleBackColor = true;
+            this.circle.CheckedChanged += new System.EventHandler(this.circle_CheckedChanged);
             // 
-            // button4
+            // eclipse
             // 
-            this.button4.Location = new System.Drawing.Point(375, 19);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(29, 29);
-            this.button4.TabIndex = 6;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.eclipse.AutoSize = true;
+            this.eclipse.Location = new System.Drawing.Point(442, 19);
+            this.eclipse.Name = "eclipse";
+            this.eclipse.Size = new System.Drawing.Size(66, 18);
+            this.eclipse.TabIndex = 6;
+            this.eclipse.Text = "Eclipse";
+            this.eclipse.UseVisualStyleBackColor = true;
+            this.eclipse.CheckedChanged += new System.EventHandler(this.eclipse_CheckedChanged);
             // 
-            // button5
+            // rectangle
             // 
-            this.button5.Location = new System.Drawing.Point(375, 54);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(28, 26);
-            this.button5.TabIndex = 7;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.rectangle.AutoSize = true;
+            this.rectangle.Location = new System.Drawing.Point(442, 43);
+            this.rectangle.Name = "rectangle";
+            this.rectangle.Size = new System.Drawing.Size(83, 18);
+            this.rectangle.TabIndex = 7;
+            this.rectangle.Text = "Rectangle";
+            this.rectangle.UseVisualStyleBackColor = true;
+            this.rectangle.CheckedChanged += new System.EventHandler(this.rectangle_CheckedChanged);
             // 
-            // button6
+            // radioButton3
             // 
-            this.button6.Location = new System.Drawing.Point(412, 19);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(28, 29);
-            this.button6.TabIndex = 8;
-            this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(638, 43);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(101, 18);
+            this.radioButton3.TabIndex = 8;
+            this.radioButton3.Text = "radioButton3";
+            this.radioButton3.UseVisualStyleBackColor = true;
             // 
-            // button7
+            // radioButton4
             // 
-            this.button7.Location = new System.Drawing.Point(412, 54);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(27, 26);
-            this.button7.TabIndex = 9;
-            this.button7.Text = "button7";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Location = new System.Drawing.Point(531, 43);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(101, 18);
+            this.radioButton4.TabIndex = 9;
+            this.radioButton4.Text = "radioButton4";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            // 
+            // equilateralTriangle
+            // 
+            this.equilateralTriangle.AutoSize = true;
+            this.equilateralTriangle.Location = new System.Drawing.Point(531, 19);
+            this.equilateralTriangle.Name = "equilateralTriangle";
+            this.equilateralTriangle.Size = new System.Drawing.Size(137, 18);
+            this.equilateralTriangle.TabIndex = 10;
+            this.equilateralTriangle.Text = "Equilateral Triangle";
+            this.equilateralTriangle.UseVisualStyleBackColor = true;
+            this.equilateralTriangle.CheckedChanged += new System.EventHandler(this.equlateral_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.equilateralTriangle);
+            this.Controls.Add(this.radioButton4);
+            this.Controls.Add(this.radioButton3);
+            this.Controls.Add(this.rectangle);
+            this.Controls.Add(this.eclipse);
+            this.Controls.Add(this.circle);
+            this.Controls.Add(this.Line);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxThickness);
             this.Controls.Add(this.button1);
@@ -175,12 +192,13 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBoxThickness;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.RadioButton Line;
+        private System.Windows.Forms.RadioButton circle;
+        private System.Windows.Forms.RadioButton eclipse;
+        private System.Windows.Forms.RadioButton rectangle;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton equilateralTriangle;
     }
 }
 
