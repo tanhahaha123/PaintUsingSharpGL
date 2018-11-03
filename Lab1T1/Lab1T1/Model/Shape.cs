@@ -114,10 +114,21 @@ namespace Lab1T1.Model
 
     public class Circle : Shape
     {
-        private static Point start, center, tmp;
-        private static long x2, y2;
-        private static double p;
-        private static int radius;
+        public Point start, center;
+        public long tmpX2, tmpY2;
+        public double p;
+        public int radius;
+
+        private void PrepareData()
+        {
+            double tmpRadius = Math.Sqrt(Math.Pow(upLeft.X - center.X, 2) + Math.Pow(upLeft.Y - center.Y, 2));
+            string tmpRStr = ((int)tmpRadius).ToString();
+            radius = int.Parse(tmpRStr);
+            start = new Point(0, radius);
+            tmpX2 = 0;
+            tmpY2 = 2 * start.Y;
+            p = 5 / 4 - radius;
+        }
 
         public Circle(Point a, Point b, float thickness, Color userChoose)
         {
@@ -125,16 +136,22 @@ namespace Lab1T1.Model
             downRight = b;
             this.thickness = thickness;
             this.userChoose = userChoose;
-            center = new Point((a.X + b.X) / 2, (a.Y + b.Y) / 2);
-            double tmpRadius = Math.Sqrt(Math.Pow(a.X - center.X, 2) + Math.Pow(a.Y - center.Y, 2));
-            string tmpRStr = ((int)tmpRadius).ToString();
-            radius = int.Parse(tmpRStr);
-            start = new Point(0, radius);
-            x2 = 0; y2 = 2 * radius;
-            p = 5 / 4 - double.Parse(tmpRStr.ToString());
+            int xCenter = (a.X + b.X);
+            xCenter /= 2;
+            int yCenter = (a.Y + b.Y);
+            yCenter /= 2;
+
+            center = new Point(xCenter, yCenter);
+            PrepareData();
         }
         public override void Draw(OpenGLControl glControl)
         {
+            //Prepare data
+            long x2 = tmpX2;
+            long y2 = tmpY2;
+
+            start = new Point(0, radius);
+
             base.Draw(glControl);
             int k = 0;
             var gl = glControl.OpenGL;
@@ -142,8 +159,7 @@ namespace Lab1T1.Model
             gl.Begin(OpenGL.GL_POINTS);
             while (true)
             {
-                //Bug tại vì Sau khi chạy vòng lặp xong thì start.X >= start.Y rồi. Gán thì có cái hình vuông ở trong :O
-                if (start.X >= start.Y)
+                if (start.X > start.Y)
                 {
                     gl.End();
                     return;
@@ -202,7 +218,7 @@ namespace Lab1T1.Model
             {
                 tmpUpleftY = tmp1;
             }
-                
+            
             gl.Vertex((downRight.X + upLeft.X) / 2, glControl.Height - tmpUpleftY);
             gl.End();
         }

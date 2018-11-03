@@ -11,7 +11,7 @@ namespace Lab1T1
     {
         static Color userChoose = Color.Black;
         static float thickness = 1.0f;
-        static Point start, end;
+        static Point start = new Point(-1000, -1000), end;
         static bool isDown = false;
         static Stack<Shape> listDraw = new Stack<Shape>();
         //chooseImg = 0 -> Line
@@ -67,28 +67,33 @@ namespace Lab1T1
             }
 
             //Xem lựa chọn của user và chọn hinh vẽ
-
-            switch (chooseImg)
+            if (start.X != -1000)
             {
-                case 0:
-                    imgToDraw = new Line(start, end, thickness, userChoose);
-                    break;
-                case 1:
-                    imgToDraw = new Circle(start, end, thickness, userChoose);
-                    break;
-                case 2:
-                    imgToDraw = new Eclipse(start, end, thickness, userChoose);
-                    break;
-                case 3:
-                    imgToDraw = new Rectangel(start, end, thickness, userChoose);
-                    break;
-                case 4:
-                    imgToDraw = new EquilateralTriangle(start, end, thickness, userChoose);
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
+                switch (chooseImg)
+                {
+                    case 0:
+                        imgToDraw = new Line(start, end, thickness, userChoose);
+                        break;
+                    case 1:
+                        imgToDraw = new Circle(start, end, thickness, userChoose);
+                        break;
+                    case 2:
+                        imgToDraw = new Eclipse(start, end, thickness, userChoose);
+                        break;
+                    case 3:
+                        imgToDraw = new Rectangel(start, end, thickness, userChoose);
+                        break;
+                    case 4:
+                        imgToDraw = new EquilateralTriangle(start, end, thickness, userChoose);
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    default:
+                        imgToDraw = null;
+                        break;
+                }
             }
 
             while (listDraw.Count != 0)
@@ -160,7 +165,6 @@ namespace Lab1T1
                 end = e.Location;
             }
         }
-
 
         private void openGLControl_MouseDown(object sender, MouseEventArgs e)
         {
