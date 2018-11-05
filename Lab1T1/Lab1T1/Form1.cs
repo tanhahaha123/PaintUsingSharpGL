@@ -165,6 +165,11 @@ namespace Lab1T1
             chooseImg = 5;
         }
 
+        private void equalHexagon_CheckedChanged(object sender, EventArgs e)
+        {
+            chooseImg = 6;
+        }
+
         private void openGLControl_MouseMove(object sender, MouseEventArgs e)
         {
             if (isDown == true)

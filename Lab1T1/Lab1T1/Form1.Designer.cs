@@ -139,6 +139,7 @@
             this.equalHexagon.TabIndex = 8;
             this.equalHexagon.Text = "Equilateral Hexagon";
             this.equalHexagon.UseVisualStyleBackColor = true;
+            this.equalHexagon.CheckedChanged += new System.EventHandler(this.equalHexagon_CheckedChanged);
             // 
             // equalPetagon
             // 
