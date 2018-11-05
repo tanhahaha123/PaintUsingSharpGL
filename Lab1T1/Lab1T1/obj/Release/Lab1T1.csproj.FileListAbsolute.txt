@@ -1,0 +1,14 @@
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\bin\Release\Lab1T1.exe.config
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\bin\Release\Lab1T1.exe
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\bin\Release\Lab1T1.pdb
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\bin\Release\SharpGL.dll
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\bin\Release\SharpGL.SceneGraph.dll
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\bin\Release\SharpGL.WinForms.dll
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\obj\Release\Lab1T1.csprojAssemblyReference.cache
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\obj\Release\Lab1T1.Form1.resources
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\obj\Release\Lab1T1.Properties.Resources.resources
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\obj\Release\Lab1T1.csproj.GenerateResource.cache
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\obj\Release\Lab1T1.csproj.CoreCompileInputs.cache
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\obj\Release\Lab1T1.csproj.CopyComplete
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\obj\Release\Lab1T1.exe
+E:\DH_Nam3\ĐHMT\Lab\Lab1\Lab1T1\Lab1T1\obj\Release\Lab1T1.pdb

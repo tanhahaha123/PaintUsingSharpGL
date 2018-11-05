@@ -87,8 +87,10 @@ namespace Lab1T1
                         imgToDraw = new EquilateralTriangle(start, end, thickness, userChoose);
                         break;
                     case 5:
+                        imgToDraw = new EqualPentagon(start, end, thickness, userChoose);
                         break;
                     case 6:
+                        imgToDraw = new EqualHexagon(start, end, thickness, userChoose);
                         break;
                     default:
                         imgToDraw = null;
@@ -117,7 +119,7 @@ namespace Lab1T1
             gl.Flush();
         }
 
-
+        //Color dialog để chọn màu
         private void button1_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
@@ -156,6 +158,11 @@ namespace Lab1T1
         private void equlateral_CheckedChanged(object sender, EventArgs e)
         {
             chooseImg = 4;
+        }
+        
+        private void equalPetagon_CheckedChanged(object sender, EventArgs e)
+        {
+            chooseImg = 5;
         }
 
         private void openGLControl_MouseMove(object sender, MouseEventArgs e)

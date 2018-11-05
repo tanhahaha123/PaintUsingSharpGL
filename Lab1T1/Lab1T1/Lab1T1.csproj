@@ -87,17 +87,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="Image\circle.png" />
-    <Content Include="Image\line.png" />
-    <Content Include="Image\lucGiacDeu.png" />
-    <Content Include="Image\nguGiacDeu.png" />
-    <Content Include="Image\Rectangle.png" />
-    <Content Include="Image\square.png" />
-    <Content Include="Image\Triangle.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

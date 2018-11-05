@@ -18,6 +18,18 @@ namespace Lab1T1.Model
             gl.LineWidth(thickness);
             gl.Color(userChoose.R / 255.0, userChoose.G / 255.0, userChoose.B / 255.0);
         }
+
+        public void DrawALineWithAngle(OpenGLControl glControl, int angle,Point goc, Point start, Point end)
+        {
+            var gl = glControl.OpenGL;
+            gl.Translate(goc.X, glControl.Height - goc.Y, 0);
+            gl.Rotate(angle, 0, 0, 1);
+            gl.Translate(-goc.X, -(glControl.Height - goc.Y), 0);
+            gl.Begin(OpenGL.GL_LINES);
+            gl.Vertex(start.X, glControl.Height - start.Y);
+            gl.Vertex(end.X, glControl.Height - end.Y);
+            gl.End();
+        }
     }
 
     public class Rectangel : Shape
@@ -134,6 +146,11 @@ namespace Lab1T1.Model
         {
             upLeft = a;
             downRight = b;
+            if (a == b)
+            {
+                return;
+            }
+
             this.thickness = thickness;
             this.userChoose = userChoose;
             int xCenter = (a.X + b.X);
@@ -149,6 +166,9 @@ namespace Lab1T1.Model
             //Prepare data
             long x2 = tmpX2;
             long y2 = tmpY2;
+
+            radius = 100;
+            x2 = 0;
 
             start = new Point(0, radius);
 
@@ -201,26 +221,72 @@ namespace Lab1T1.Model
         }
         public override void Draw(OpenGLControl glControl)
         {
+            var upRight = new Point(downRight.X, upLeft.Y);
             base.Draw(glControl);
             var gl = glControl.OpenGL;
-
-            gl.Begin(OpenGL.GL_LINE_LOOP);
-            gl.Vertex(upLeft.X, glControl.Height - downRight.Y);
-            gl.Vertex(downRight.X, glControl.Height - downRight.Y);
-            double tmpUpleftY;
-            var tmp1 = downRight.Y + Math.Abs(((downRight.X + upLeft.X) / 2 - upLeft.X) * Math.Sqrt(3));
-            var tmp2 = downRight.Y - Math.Abs(((downRight.X + upLeft.X) / 2 - upLeft.X) * Math.Sqrt(3));
-            if (Math.Abs(tmp1 - upLeft.Y) > Math.Abs(tmp2 - upLeft.Y))
+            gl.PushMatrix();
+            DrawALineWithAngle(glControl, 0, upLeft, upLeft, upRight);
+            if ((downRight.Y < upLeft.Y && downRight.X > upLeft.X)||(downRight.Y > upLeft.Y && downRight.X < upLeft.X))
             {
-                tmpUpleftY = tmp2;
+                DrawALineWithAngle(glControl, 60, upLeft, upLeft, upRight);
+                DrawALineWithAngle(glControl, 60, upRight, upLeft, upRight);
             }
             else
             {
-                tmpUpleftY = tmp1;
+                DrawALineWithAngle(glControl, -60, upLeft, upLeft, upRight);
+                DrawALineWithAngle(glControl, -60, upRight, upLeft, upRight);
             }
-            
-            gl.Vertex((downRight.X + upLeft.X) / 2, glControl.Height - tmpUpleftY);
-            gl.End();
+            gl.PopMatrix();
+        }
+    }
+
+    public class EqualPentagon: Shape
+    {
+        public EqualPentagon(Point a, Point b, float thickness, Color color)
+        {
+            upLeft = a; downRight = b;
+            this.thickness = thickness;
+            userChoose = color;
+        }
+
+        public override void Draw(OpenGLControl glControl)
+        {
+            var upRight = new Point(downRight.X, upLeft.Y);
+            base.Draw(glControl);
+            var gl = glControl.OpenGL;
+            gl.PushMatrix();
+            DrawALineWithAngle(glControl, 0, upLeft, upLeft, upRight);
+            if ((downRight.Y < upLeft.Y && downRight.X > upLeft.X) || (downRight.Y > upLeft.Y && downRight.X < upLeft.X))
+            {
+                DrawALineWithAngle(glControl, 108, upLeft, upLeft, upRight);
+                DrawALineWithAngle(glControl, 108, upRight, upLeft, upRight);
+                DrawALineWithAngle(glControl, 108, upLeft, upLeft, upRight);
+                DrawALineWithAngle(glControl, 108, upRight, upLeft, upRight);
+            }
+            else
+            {
+                DrawALineWithAngle(glControl, -108, upLeft, upLeft, upRight);
+                DrawALineWithAngle(glControl, -108, upRight, upLeft, upRight);
+                DrawALineWithAngle(glControl, -108, upLeft, upLeft, upRight);
+                DrawALineWithAngle(glControl, -108, upRight, upLeft, upRight);
+            }
+            gl.PopMatrix();
+        }
+    }
+
+    public class EqualHexagon: Shape
+    {
+        public EqualHexagon(Point a, Point b, float thickness, Color color)
+        {
+            upLeft = a; downRight = b;
+            this.thickness = thickness;
+            userChoose = color;
+        }
+
+        public override void Draw(OpenGLControl glControl)
+        {
+            var upRight = new Point(downRight.X, upLeft.Y);
+            base.Draw(glControl);
         }
     }
 }

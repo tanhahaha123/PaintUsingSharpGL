@@ -37,8 +37,8 @@
             this.circle = new System.Windows.Forms.RadioButton();
             this.eclipse = new System.Windows.Forms.RadioButton();
             this.rectangle = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.equalHexagon = new System.Windows.Forms.RadioButton();
+            this.equalPetagon = new System.Windows.Forms.RadioButton();
             this.equilateralTriangle = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
             this.SuspendLayout();
@@ -89,7 +89,7 @@
             // Line
             // 
             this.Line.AutoSize = true;
-            this.Line.Location = new System.Drawing.Point(373, 19);
+            this.Line.Location = new System.Drawing.Point(373, 12);
             this.Line.Name = "Line";
             this.Line.Size = new System.Drawing.Size(50, 18);
             this.Line.TabIndex = 4;
@@ -100,7 +100,7 @@
             // circle
             // 
             this.circle.AutoSize = true;
-            this.circle.Location = new System.Drawing.Point(373, 43);
+            this.circle.Location = new System.Drawing.Point(373, 36);
             this.circle.Name = "circle";
             this.circle.Size = new System.Drawing.Size(59, 18);
             this.circle.TabIndex = 5;
@@ -111,7 +111,7 @@
             // eclipse
             // 
             this.eclipse.AutoSize = true;
-            this.eclipse.Location = new System.Drawing.Point(442, 19);
+            this.eclipse.Location = new System.Drawing.Point(442, 12);
             this.eclipse.Name = "eclipse";
             this.eclipse.Size = new System.Drawing.Size(66, 18);
             this.eclipse.TabIndex = 6;
@@ -122,7 +122,7 @@
             // rectangle
             // 
             this.rectangle.AutoSize = true;
-            this.rectangle.Location = new System.Drawing.Point(442, 43);
+            this.rectangle.Location = new System.Drawing.Point(442, 37);
             this.rectangle.Name = "rectangle";
             this.rectangle.Size = new System.Drawing.Size(83, 18);
             this.rectangle.TabIndex = 7;
@@ -130,30 +130,31 @@
             this.rectangle.UseVisualStyleBackColor = true;
             this.rectangle.CheckedChanged += new System.EventHandler(this.rectangle_CheckedChanged);
             // 
-            // radioButton3
+            // equalHexagon
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(638, 43);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(101, 18);
-            this.radioButton3.TabIndex = 8;
-            this.radioButton3.Text = "radioButton3";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.equalHexagon.AutoSize = true;
+            this.equalHexagon.Location = new System.Drawing.Point(531, 60);
+            this.equalHexagon.Name = "equalHexagon";
+            this.equalHexagon.Size = new System.Drawing.Size(140, 18);
+            this.equalHexagon.TabIndex = 8;
+            this.equalHexagon.Text = "Equilateral Hexagon";
+            this.equalHexagon.UseVisualStyleBackColor = true;
             // 
-            // radioButton4
+            // equalPetagon
             // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(531, 43);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(101, 18);
-            this.radioButton4.TabIndex = 9;
-            this.radioButton4.Text = "radioButton4";
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.equalPetagon.AutoSize = true;
+            this.equalPetagon.Location = new System.Drawing.Point(531, 36);
+            this.equalPetagon.Name = "equalPetagon";
+            this.equalPetagon.Size = new System.Drawing.Size(146, 18);
+            this.equalPetagon.TabIndex = 9;
+            this.equalPetagon.Text = "Equilateral Pentagon";
+            this.equalPetagon.UseVisualStyleBackColor = true;
+            this.equalPetagon.CheckedChanged += new System.EventHandler(this.equalPetagon_CheckedChanged);
             // 
             // equilateralTriangle
             // 
             this.equilateralTriangle.AutoSize = true;
-            this.equilateralTriangle.Location = new System.Drawing.Point(531, 19);
+            this.equilateralTriangle.Location = new System.Drawing.Point(531, 12);
             this.equilateralTriangle.Name = "equilateralTriangle";
             this.equilateralTriangle.Size = new System.Drawing.Size(137, 18);
             this.equilateralTriangle.TabIndex = 10;
@@ -167,8 +168,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.equilateralTriangle);
-            this.Controls.Add(this.radioButton4);
-            this.Controls.Add(this.radioButton3);
+            this.Controls.Add(this.equalPetagon);
+            this.Controls.Add(this.equalHexagon);
             this.Controls.Add(this.rectangle);
             this.Controls.Add(this.eclipse);
             this.Controls.Add(this.circle);
@@ -196,8 +197,8 @@
         private System.Windows.Forms.RadioButton circle;
         private System.Windows.Forms.RadioButton eclipse;
         private System.Windows.Forms.RadioButton rectangle;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton equalHexagon;
+        private System.Windows.Forms.RadioButton equalPetagon;
         private System.Windows.Forms.RadioButton equilateralTriangle;
     }
 }
