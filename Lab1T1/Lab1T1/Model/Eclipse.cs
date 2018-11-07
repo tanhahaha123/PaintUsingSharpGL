@@ -48,6 +48,10 @@ namespace Lab1T1.Model
                 gl.Vertex(center.X + radiusX * Math.Cos(rad), tmpCenterY + radiusY * Math.Sin(rad));
             }
             gl.End();
+            if(veDdk == true)
+            {
+                DrawControlPoint(glControl);
+            }
         }
     }
 

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace Lab1T1.Model
 {
 
-    public class EquilateralTriangle : Shape
+    public class EqualTriangle : Shape
     {
-        public EquilateralTriangle(Point a, Point b, float thickness, Color userChoose)
+        public EqualTriangle(Point a, Point b, float thickness, Color userChoose)
         {
             upLeft = a;
             downRight = b;

@@ -11,6 +11,28 @@ namespace Lab1T1.Model
         public DateTime timeCreate;
         public float thickness;
         public Color userChoose;
+        public DateTime thoiGianVe;
+        public bool veDdk = false;
+
+        public virtual void DrawControlPoint(OpenGLControl glControl, Color? color = null)
+        {
+            Color choose = color ?? Color.DeepPink;
+            var gl = glControl.OpenGL;
+            gl.Color(choose.R / 255.0, choose.G / 255.0, choose.B / 255.0);
+            gl.PointSize(3f);
+            gl.Begin(OpenGL.GL_POINTS);
+            gl.Vertex(upLeft.X, glControl.Height - upLeft.Y);
+            gl.Vertex(downRight.X, glControl.Height - downRight.Y);
+            gl.Vertex(upLeft.X, glControl.Height - downRight.Y);
+            gl.Vertex(downRight.X, glControl.Height - upLeft.Y);
+            gl.Vertex(upLeft.X, glControl.Height - (upLeft.Y + downRight.Y)/2);
+            gl.Vertex(downRight.X, glControl.Height - (upLeft.Y + downRight.Y)/2);
+            gl.Vertex((upLeft.X + downRight.X)/2, glControl.Height - upLeft.Y);
+            gl.Vertex((upLeft.X + downRight.X)/2, glControl.Height - downRight.Y);
+            gl.End();
+            gl.Flush();
+        }
+
         public virtual void Draw(OpenGLControl glControl)
         {
             var gl = glControl.OpenGL;

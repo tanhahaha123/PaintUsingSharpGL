@@ -15,6 +15,8 @@ namespace Lab1T1.Helper
             //Xem lựa chọn của user và chọn hinh vẽ
             if (start.X != -1000)
             {
+                if (start == end)
+                    chooseImg = -1;
                 switch (chooseImg)
                 {
                     case 0:
@@ -30,7 +32,7 @@ namespace Lab1T1.Helper
                         imgToDraw = new Rectangel(start, end, thickness, userChoose);
                         break;
                     case 4:
-                        imgToDraw = new EquilateralTriangle(start, end, thickness, userChoose);
+                        imgToDraw = new EqualTriangle(start, end, thickness, userChoose);
                         break;
                     case 5:
                         imgToDraw = new EqualPentagon(start, end, thickness, userChoose);

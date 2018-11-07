@@ -4,7 +4,6 @@ using SharpGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Lab1T1
@@ -27,12 +26,26 @@ namespace Lab1T1
         //mode = 1 là trạng thái vẽ, mode = 2 là trạng thái tô màu.
         //mode = 3 là vẽ đa giác, mode = 4 là thao tác trên điểm điều khiển của hình
         static int mode = 1;
-        static Polygon tmp;
-        static int i = 1;
+        static Polygon newPolygonItem;
+        static Shape newShapeItem;
+        static List<Label> name = new List<Label> ();
+        static List<Label> thoigian = new List<Label>();
 
         public Form1()
         {
             InitializeComponent();
+            name.Add(hinhve0);
+            name.Add(hinhve1);
+            name.Add(hinhve2);
+            name.Add(hinhve3);
+            name.Add(hinhve4);
+            name.Add(hinhve5);
+            thoigian.Add(thoigianve0);
+            thoigian.Add(thoigianve1);
+            thoigian.Add(thoigianve2);
+            thoigian.Add(thoigianve3);
+            thoigian.Add(thoigianve4);
+            thoigian.Add(thoigianve5);
         }
 
 
@@ -59,7 +72,6 @@ namespace Lab1T1
 
         private void openGLControl1_OpenGLDraw(object sender, SharpGL.RenderEventArgs args)
         {
-            var oldCheck = Draw.listDraw.Count;
             OpenGL gl = openGLControl.OpenGL;
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
 
@@ -73,24 +85,14 @@ namespace Lab1T1
                 {
                     thickness = 1.0f;
                 }
-
                 //Xem lựa chọn của user và chọn hinh vẽ và vẽ
-                var newItem = Draw.TimHinhVe(openGLControl, chooseImg, start, end, userChoose, thickness);
-                if (oldCheck != Draw.listDraw.Count)
-                {
-                    oldCheck = Draw.listDraw.Count;
-                    timeTable.RowCount = timeTable.RowCount + 1;
-                    timeTable.RowStyles.Add(new RowStyle());
-                    timeTable.Controls.Add(new Label() { Text = "Street" + i }, 0, timeTable.RowCount);
-                    timeTable.Controls.Add(new Label() { Text = "888888" }, 1, timeTable.RowCount);
-                    i++;
-                }
+                newShapeItem = Draw.TimHinhVe(openGLControl, chooseImg, start, end, userChoose, thickness);
             }
-            else if(mode == 3)
+            else if (mode == 3)
             {
-                if(mouseLeft == true)
+                if (mouseLeft == true)
                 {
-                    tmp.Draw(openGLControl);
+                    newPolygonItem.Draw(openGLControl);
                 }
             }
             lPolygon.ForEach(x => x.Draw(openGLControl));
@@ -105,7 +107,7 @@ namespace Lab1T1
                 userChoose = colorDialog1.Color;
             }
         }
-        
+
         private void openGLControl_MouseDown(object sender, MouseEventArgs e)
         {
             if (mode == 1)
@@ -122,21 +124,27 @@ namespace Lab1T1
             {
                 isDown = false;
                 end = e.Location;
-            }
-            if(mode == 3)
-            {
-                if(e.Button == MouseButtons.Left)
+                if (newShapeItem != null)
                 {
-                    tmp.Add(e.Location);
+                    WriteLog.AddLog(new Log { name = newShapeItem.GetType().ToString().Split('.')[2], dayDraw = DateTime.Now });
+                }
+            }
+            if (mode == 3)
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    newPolygonItem.Add(e.Location);
                     mouseLeft = true;
                 }
                 else
                 {
-                    lPolygon.Add(tmp);
-                    tmp = new Polygon();
+                    lPolygon.Add(newPolygonItem);
+                    WriteLog.AddLog(new Log { name = "Polygon", dayDraw = DateTime.Now });
+                    newPolygonItem = new Polygon();
                     mouseLeft = false;
                 }
             }
+            WriteLog.Render(name, thoigian);
         }
 
         private void openGLControl_MouseMove(object sender, MouseEventArgs e)
@@ -190,7 +198,7 @@ namespace Lab1T1
         private void modeTo3_Click(object sender, EventArgs e)
         {
             mode = 3;
-            tmp = new Polygon();
+            newPolygonItem = new Polygon();
         }
     }
 }

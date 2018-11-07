@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Lab1T1.Model
 {
-
     public class Rectangel : Shape
     {
         public Rectangel(Point upLeft, Point downRight, float thickness, Color userChoose)
@@ -30,6 +29,10 @@ namespace Lab1T1.Model
             gl.Vertex(downRight.X, glControl.Height - downRight.Y);
             gl.Vertex(downRight.X, glControl.Height - upLeft.Y);
             gl.End();
+            if(veDdk == true)
+            {
+                DrawControlPoint(glControl);
+            }
         }
     }
 

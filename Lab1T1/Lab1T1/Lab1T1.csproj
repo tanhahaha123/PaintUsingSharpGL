@@ -62,6 +62,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\Draw.cs" />
+    <Compile Include="Helper\WriteLog.cs" />
     <Compile Include="Model\Circle.cs" />
     <Compile Include="Model\Eclipse.cs" />
     <Compile Include="Model\EqualHexagon.cs" />

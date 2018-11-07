@@ -13,9 +13,8 @@ namespace Lab1T1.Model
 
         private void PrepareData()
         {
-            double tmpRadius = Math.Sqrt(Math.Pow(upLeft.X - center.X, 2) + Math.Pow(upLeft.Y - center.Y, 2));
-            string tmpRStr = ((int)tmpRadius).ToString();
-            radius = int.Parse(tmpRStr);
+            radius = Math.Abs(center.X - upLeft.X);
+
             start = new Point(0, radius);
             tmpX2 = 0;
             tmpY2 = 2 * start.Y;
@@ -24,13 +23,35 @@ namespace Lab1T1.Model
 
         public Circle(Point a, Point b, float thickness, Color userChoose)
         {
-            upLeft = a;
-            downRight = b;
             if (a == b)
             {
                 return;
             }
+            else if (Math.Abs(a.X - b.X) > Math.Abs(a.Y - b.Y))
+            {
+                if(b.Y < a.Y)
+                {
+                    b.Y = a.Y - Math.Abs(a.X - b.X);
+                }
+                else
+                {
+                    b.Y = a.Y + Math.Abs(a.X - b.X);
+                }
+            }
+            else if (Math.Abs(a.X - b.X) < Math.Abs(a.Y - b.Y))
+            {
+                if (b.X < a.X)
+                {
+                    b.X = a.X - Math.Abs(a.Y - b.Y);
+                }
+                else
+                {
+                    b.X = a.X + Math.Abs(a.Y - b.Y);
+                }
+            }
 
+            upLeft = a;
+            downRight = b;
             this.thickness = thickness;
             this.userChoose = userChoose;
             int xCenter = (a.X + b.X);
@@ -60,6 +81,11 @@ namespace Lab1T1.Model
                 if (start.X > start.Y)
                 {
                     gl.End();
+                    gl.Flush();
+                    if (veDdk == true)
+                    {
+                        DrawControlPoint(glControl);
+                    }
                     return;
                 }
                 //Vẽ điểm cũ,  và 7 điểm đối xứng của nó
@@ -85,6 +111,7 @@ namespace Lab1T1.Model
                 }
                 k++;
             }
+
         }
     }
 }

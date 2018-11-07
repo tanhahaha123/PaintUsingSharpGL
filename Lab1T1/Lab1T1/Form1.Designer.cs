@@ -43,9 +43,20 @@
             this.chonHinhBtn = new System.Windows.Forms.Button();
             this.modeTo3 = new System.Windows.Forms.Button();
             this.modeTo1 = new System.Windows.Forms.Button();
-            this.timeTable = new System.Windows.Forms.TableLayoutPanel();
-            this.abc = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.abc = new System.Windows.Forms.Label();
+            this.hinhve0 = new System.Windows.Forms.Label();
+            this.thoigianve0 = new System.Windows.Forms.Label();
+            this.hinhve3 = new System.Windows.Forms.Label();
+            this.hinhve2 = new System.Windows.Forms.Label();
+            this.hinhve1 = new System.Windows.Forms.Label();
+            this.hinhve4 = new System.Windows.Forms.Label();
+            this.hinhve5 = new System.Windows.Forms.Label();
+            this.thoigianve1 = new System.Windows.Forms.Label();
+            this.thoigianve3 = new System.Windows.Forms.Label();
+            this.thoigianve2 = new System.Windows.Forms.Label();
+            this.thoigianve5 = new System.Windows.Forms.Label();
+            this.thoigianve4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
             this.SuspendLayout();
             // 
@@ -198,47 +209,139 @@
             this.modeTo1.UseVisualStyleBackColor = true;
             this.modeTo1.Click += new System.EventHandler(this.modeTo1_Click);
             // 
-            // timeTable
+            // label2
             // 
-            this.timeTable.AutoScroll = true;
-            this.timeTable.ColumnCount = 2;
-            this.timeTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.5F));
-            this.timeTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.5F));
-            this.timeTable.Location = new System.Drawing.Point(707, 96);
-            this.timeTable.Name = "timeTable";
-            this.timeTable.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.timeTable.RowCount = 2;
-            this.timeTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.timeTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.timeTable.Size = new System.Drawing.Size(200, 314);
-            this.timeTable.TabIndex = 14;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(811, 79);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(75, 14);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Thời gian vẽ";
             // 
             // abc
             // 
             this.abc.AutoSize = true;
-            this.abc.Location = new System.Drawing.Point(731, 79);
+            this.abc.Location = new System.Drawing.Point(739, 79);
             this.abc.Name = "abc";
             this.abc.Size = new System.Drawing.Size(34, 14);
             this.abc.TabIndex = 0;
             this.abc.Text = "Hình";
             // 
-            // label2
+            // hinhve0
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(804, 79);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(75, 14);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Thời gian vẽ";
+            this.hinhve0.AutoSize = true;
+            this.hinhve0.Location = new System.Drawing.Point(721, 108);
+            this.hinhve0.Name = "hinhve0";
+            this.hinhve0.Size = new System.Drawing.Size(0, 14);
+            this.hinhve0.TabIndex = 14;
+            // 
+            // thoigianve0
+            // 
+            this.thoigianve0.AutoSize = true;
+            this.thoigianve0.Location = new System.Drawing.Point(823, 108);
+            this.thoigianve0.Name = "thoigianve0";
+            this.thoigianve0.Size = new System.Drawing.Size(0, 14);
+            this.thoigianve0.TabIndex = 15;
+            // 
+            // hinhve3
+            // 
+            this.hinhve3.AutoSize = true;
+            this.hinhve3.Location = new System.Drawing.Point(721, 186);
+            this.hinhve3.Name = "hinhve3";
+            this.hinhve3.Size = new System.Drawing.Size(0, 14);
+            this.hinhve3.TabIndex = 16;
+            // 
+            // hinhve2
+            // 
+            this.hinhve2.AutoSize = true;
+            this.hinhve2.Location = new System.Drawing.Point(721, 160);
+            this.hinhve2.Name = "hinhve2";
+            this.hinhve2.Size = new System.Drawing.Size(0, 14);
+            this.hinhve2.TabIndex = 17;
+            // 
+            // hinhve1
+            // 
+            this.hinhve1.AutoSize = true;
+            this.hinhve1.Location = new System.Drawing.Point(721, 135);
+            this.hinhve1.Name = "hinhve1";
+            this.hinhve1.Size = new System.Drawing.Size(0, 14);
+            this.hinhve1.TabIndex = 18;
+            // 
+            // hinhve4
+            // 
+            this.hinhve4.AutoSize = true;
+            this.hinhve4.Location = new System.Drawing.Point(721, 212);
+            this.hinhve4.Name = "hinhve4";
+            this.hinhve4.Size = new System.Drawing.Size(0, 14);
+            this.hinhve4.TabIndex = 20;
+            // 
+            // hinhve5
+            // 
+            this.hinhve5.AutoSize = true;
+            this.hinhve5.Location = new System.Drawing.Point(721, 236);
+            this.hinhve5.Name = "hinhve5";
+            this.hinhve5.Size = new System.Drawing.Size(0, 14);
+            this.hinhve5.TabIndex = 19;
+            // 
+            // thoigianve1
+            // 
+            this.thoigianve1.AutoSize = true;
+            this.thoigianve1.Location = new System.Drawing.Point(823, 135);
+            this.thoigianve1.Name = "thoigianve1";
+            this.thoigianve1.Size = new System.Drawing.Size(0, 14);
+            this.thoigianve1.TabIndex = 21;
+            // 
+            // thoigianve3
+            // 
+            this.thoigianve3.AutoSize = true;
+            this.thoigianve3.Location = new System.Drawing.Point(823, 186);
+            this.thoigianve3.Name = "thoigianve3";
+            this.thoigianve3.Size = new System.Drawing.Size(0, 14);
+            this.thoigianve3.TabIndex = 23;
+            // 
+            // thoigianve2
+            // 
+            this.thoigianve2.AutoSize = true;
+            this.thoigianve2.Location = new System.Drawing.Point(823, 159);
+            this.thoigianve2.Name = "thoigianve2";
+            this.thoigianve2.Size = new System.Drawing.Size(0, 14);
+            this.thoigianve2.TabIndex = 22;
+            // 
+            // thoigianve5
+            // 
+            this.thoigianve5.AutoSize = true;
+            this.thoigianve5.Location = new System.Drawing.Point(823, 236);
+            this.thoigianve5.Name = "thoigianve5";
+            this.thoigianve5.Size = new System.Drawing.Size(0, 14);
+            this.thoigianve5.TabIndex = 25;
+            // 
+            // thoigianve4
+            // 
+            this.thoigianve4.AutoSize = true;
+            this.thoigianve4.Location = new System.Drawing.Point(823, 209);
+            this.thoigianve4.Name = "thoigianve4";
+            this.thoigianve4.Size = new System.Drawing.Size(0, 14);
+            this.thoigianve4.TabIndex = 24;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(913, 450);
+            this.Controls.Add(this.thoigianve5);
+            this.Controls.Add(this.thoigianve4);
+            this.Controls.Add(this.thoigianve3);
+            this.Controls.Add(this.thoigianve2);
+            this.Controls.Add(this.thoigianve1);
+            this.Controls.Add(this.hinhve4);
+            this.Controls.Add(this.hinhve5);
+            this.Controls.Add(this.hinhve1);
+            this.Controls.Add(this.hinhve2);
+            this.Controls.Add(this.hinhve3);
+            this.Controls.Add(this.thoigianve0);
+            this.Controls.Add(this.hinhve0);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.abc);
-            this.Controls.Add(this.timeTable);
             this.Controls.Add(this.modeTo1);
             this.Controls.Add(this.modeTo3);
             this.Controls.Add(this.chonHinhBtn);
@@ -278,9 +381,20 @@
         private System.Windows.Forms.Button chonHinhBtn;
         private System.Windows.Forms.Button modeTo3;
         private System.Windows.Forms.Button modeTo1;
-        private System.Windows.Forms.TableLayoutPanel timeTable;
-        private System.Windows.Forms.Label abc;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label abc;
+        private System.Windows.Forms.Label hinhve0;
+        private System.Windows.Forms.Label thoigianve0;
+        private System.Windows.Forms.Label hinhve3;
+        private System.Windows.Forms.Label hinhve2;
+        private System.Windows.Forms.Label hinhve1;
+        private System.Windows.Forms.Label hinhve4;
+        private System.Windows.Forms.Label hinhve5;
+        private System.Windows.Forms.Label thoigianve1;
+        private System.Windows.Forms.Label thoigianve3;
+        private System.Windows.Forms.Label thoigianve2;
+        private System.Windows.Forms.Label thoigianve5;
+        private System.Windows.Forms.Label thoigianve4;
     }
 }
 
