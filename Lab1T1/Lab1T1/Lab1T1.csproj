@@ -61,12 +61,14 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\Draw.cs" />
     <Compile Include="Model\Circle.cs" />
     <Compile Include="Model\Eclipse.cs" />
     <Compile Include="Model\EqualHexagon.cs" />
     <Compile Include="Model\EqualPentagon.cs" />
     <Compile Include="Model\EquilateralTriangle.cs" />
     <Compile Include="Model\Line.cs" />
+    <Compile Include="Model\Polygon.cs" />
     <Compile Include="Model\Rectangle.cs" />
     <Compile Include="Model\Shape.cs" />
     <Compile Include="Program.cs" />

@@ -1,8 +1,10 @@
-﻿using Lab1T1.Model;
+﻿using Lab1T1.Helper;
+using Lab1T1.Model;
 using SharpGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Lab1T1
@@ -12,8 +14,8 @@ namespace Lab1T1
         static Color userChoose = Color.Black;
         static float thickness = 1.0f;
         static Point start = new Point(-1000, -1000), end;
-        static bool isDown = false;
-        static Stack<Shape> listDraw = new Stack<Shape>();
+        static List<Polygon> lPolygon = new List<Polygon>();
+        static bool isDown = false, mouseLeft = false;
         //chooseImg = 0 -> Line
         //          = 1 -> Circle
         //          = 2 -> Eclipse
@@ -22,12 +24,14 @@ namespace Lab1T1
         //          = 5 -> Ngũ giác đều
         //          = 6 -> Lục giác đều
         static int chooseImg = -1;
-
-        static Shape imgToDraw;
+        //mode = 1 là trạng thái vẽ, mode = 2 là trạng thái tô màu.
+        //mode = 3 là vẽ đa giác, mode = 4 là thao tác trên điểm điều khiển của hình
+        static int mode = 1;
+        static Polygon tmp;
+        static int i = 1;
 
         public Form1()
         {
-            listDraw.Clear();
             InitializeComponent();
         }
 
@@ -45,6 +49,7 @@ namespace Lab1T1
         private void openGLControl1_Resized(object sender, EventArgs e)
         {
             OpenGL gl = openGLControl.OpenGL;
+            gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
             gl.MatrixMode(OpenGL.GL_PROJECTION);
             gl.LoadIdentity();
             gl.Viewport(0, 0, openGLControl.Width, openGLControl.Height);
@@ -54,69 +59,42 @@ namespace Lab1T1
 
         private void openGLControl1_OpenGLDraw(object sender, SharpGL.RenderEventArgs args)
         {
+            var oldCheck = Draw.listDraw.Count;
             OpenGL gl = openGLControl.OpenGL;
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
 
             //Bắt đầu vẽ
             //Lấy màu
             gl.Color(userChoose.R / 255.0, userChoose.G / 255.0, userChoose.B / 255.0, userChoose.A / 255.0);
-            //Lấy độ đậm
-            if (!float.TryParse(textBoxThickness.Text, out thickness))
+            if (mode == 1)
             {
-                thickness = 1.0f;
-            }
-
-            //Xem lựa chọn của user và chọn hinh vẽ
-            if (start.X != -1000)
-            {
-                switch (chooseImg)
+                //Lấy độ đậm
+                if (!float.TryParse(textBoxThickness.Text, out thickness))
                 {
-                    case 0:
-                        imgToDraw = new Line(start, end, thickness, userChoose);
-                        break;
-                    case 1:
-                        imgToDraw = new Circle(start, end, thickness, userChoose);
-                        break;
-                    case 2:
-                        imgToDraw = new Eclipse(start, end, thickness, userChoose);
-                        break;
-                    case 3:
-                        imgToDraw = new Rectangel(start, end, thickness, userChoose);
-                        break;
-                    case 4:
-                        imgToDraw = new EquilateralTriangle(start, end, thickness, userChoose);
-                        break;
-                    case 5:
-                        imgToDraw = new EqualPentagon(start, end, thickness, userChoose);
-                        break;
-                    case 6:
-                        imgToDraw = new EqualHexagon(start, end, thickness, userChoose);
-                        break;
-                    default:
-                        imgToDraw = null;
-                        break;
+                    thickness = 1.0f;
+                }
+
+                //Xem lựa chọn của user và chọn hinh vẽ và vẽ
+                var newItem = Draw.TimHinhVe(openGLControl, chooseImg, start, end, userChoose, thickness);
+                if (oldCheck != Draw.listDraw.Count)
+                {
+                    oldCheck = Draw.listDraw.Count;
+                    timeTable.RowCount = timeTable.RowCount + 1;
+                    timeTable.RowStyles.Add(new RowStyle());
+                    timeTable.Controls.Add(new Label() { Text = "Street" + i }, 0, timeTable.RowCount);
+                    timeTable.Controls.Add(new Label() { Text = "888888" }, 1, timeTable.RowCount);
+                    i++;
                 }
             }
-
-            while (listDraw.Count != 0)
+            else if(mode == 3)
             {
-                var tmpCheck = listDraw.Pop();
-                if (tmpCheck.upLeft.X != start.X || tmpCheck.upLeft.Y != start.Y)
+                if(mouseLeft == true)
                 {
-                    listDraw.Push(tmpCheck);
-                    break;
+                    tmp.Draw(openGLControl);
                 }
             }
-            if (imgToDraw != null)
-            {
-                listDraw.Push(imgToDraw);
-            }
-
-            foreach (var x in listDraw)
-            {
-                x.Draw(openGLControl);
-            }
-            gl.Flush();
+            lPolygon.ForEach(x => x.Draw(openGLControl));
+            Draw.ThucHienVe(openGLControl);
         }
 
         //Color dialog để chọn màu
@@ -127,12 +105,46 @@ namespace Lab1T1
                 userChoose = colorDialog1.Color;
             }
         }
-
+        
+        private void openGLControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (mode == 1)
+            {
+                start = e.Location;
+                end = start;
+                isDown = true;
+            }
+        }
 
         private void openGLControl_MouseUp(object sender, MouseEventArgs e)
         {
-            isDown = false;
-            end = e.Location;
+            if (mode == 1)
+            {
+                isDown = false;
+                end = e.Location;
+            }
+            if(mode == 3)
+            {
+                if(e.Button == MouseButtons.Left)
+                {
+                    tmp.Add(e.Location);
+                    mouseLeft = true;
+                }
+                else
+                {
+                    lPolygon.Add(tmp);
+                    tmp = new Polygon();
+                    mouseLeft = false;
+                }
+            }
+        }
+
+        private void openGLControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDown == true && mode == 1)
+            {
+                end = e.Location;
+            }
         }
 
         private void Line_CheckedChanged(object sender, EventArgs e)
@@ -159,10 +171,15 @@ namespace Lab1T1
         {
             chooseImg = 4;
         }
-        
+
         private void equalPetagon_CheckedChanged(object sender, EventArgs e)
         {
             chooseImg = 5;
+        }
+
+        private void modeTo1_Click(object sender, EventArgs e)
+        {
+            mode = 1;
         }
 
         private void equalHexagon_CheckedChanged(object sender, EventArgs e)
@@ -170,19 +187,10 @@ namespace Lab1T1
             chooseImg = 6;
         }
 
-        private void openGLControl_MouseMove(object sender, MouseEventArgs e)
+        private void modeTo3_Click(object sender, EventArgs e)
         {
-            if (isDown == true)
-            {
-                end = e.Location;
-            }
-        }
-
-        private void openGLControl_MouseDown(object sender, MouseEventArgs e)
-        {
-            start = e.Location;
-            end = start;
-            isDown = true;
+            mode = 3;
+            tmp = new Polygon();
         }
     }
 }
