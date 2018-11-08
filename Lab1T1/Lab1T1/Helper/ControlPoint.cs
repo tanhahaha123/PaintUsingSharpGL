@@ -48,18 +48,22 @@ namespace Lab1T1.Helper
             {
                 if(minShape.distance > minPolygon.distance)
                 {
+                    minShape = null;
+                }
+                else
+                {
                     minPolygon = null;
                 }
             }
         }
 
-        public static void AllowToDraw()
+        public static void AllowToDraw(double epsilon)
         {
-            if(minPolygon != null)
+            if(minPolygon != null && minPolygon.distance < epsilon*epsilon)
             {
                 minPolygon.isDDK = true;
             }
-            if(minShape != null)
+            if(minShape != null && minShape.distance < epsilon * epsilon)
             {
                 minShape.veDdk = true;
             }

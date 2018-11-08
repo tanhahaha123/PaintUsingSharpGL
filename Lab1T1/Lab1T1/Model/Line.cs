@@ -20,10 +20,10 @@ namespace Lab1T1.Model
 
         public override void DrawControlPoint(OpenGLControl glControl, Color? color = null)
         {
-            Color choose = color ?? Color.Red;
+            Color choose = color ?? Color.HotPink;
             var gl = glControl.OpenGL;
             gl.Color(choose.R / 255.0, choose.G / 255.0, choose.B / 255.0);
-            gl.PointSize(3f);
+            gl.PointSize(5f);
             gl.Begin(OpenGL.GL_POINTS);
             gl.Vertex(upLeft.X, glControl.Height - upLeft.Y);
             gl.Vertex(downRight.X, glControl.Height - downRight.Y);

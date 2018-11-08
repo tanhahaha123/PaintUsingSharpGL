@@ -16,7 +16,7 @@ namespace Lab1T1.Model
         {
             var choose = color ?? Color.Red;
             var gl = glControl.OpenGL;
-            gl.PointSize(3f);
+            gl.PointSize(5f);
             gl.Color(choose.R / 255.0, choose.G / 255.0, choose.B / 255.0);
             gl.Begin(OpenGL.GL_POINTS);
             point.ForEach(x => gl.Vertex(x.X, glControl.Height - x.Y));

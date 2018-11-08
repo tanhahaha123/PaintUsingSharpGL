@@ -153,7 +153,7 @@ namespace Lab1T1
                 //Khi nhả  chuột ở chế độ chọn hình
                 //Tính khoảng cách tới tất cả các hình, tìm nhỏ nhất, so với epsilon, nếu nhỏ hơn thì hiện hình đó
                 ControlPoint.GetMin(lPolygon, Draw.listDraw, e.Location);
-                ControlPoint.AllowToDraw();
+                ControlPoint.AllowToDraw(100.123456789);
             }
             WriteLog.Render(name, thoigian);
         }
