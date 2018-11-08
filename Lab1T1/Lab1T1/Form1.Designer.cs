@@ -188,6 +188,7 @@
             this.chonHinhBtn.TabIndex = 11;
             this.chonHinhBtn.Text = "Chọn Hình";
             this.chonHinhBtn.UseVisualStyleBackColor = true;
+            this.chonHinhBtn.Click += new System.EventHandler(this.chonHinhBtn_Click);
             // 
             // modeTo3
             // 

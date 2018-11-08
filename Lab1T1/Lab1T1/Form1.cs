@@ -4,6 +4,7 @@ using SharpGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Lab1T1
@@ -11,6 +12,7 @@ namespace Lab1T1
     public partial class Form1 : Form
     {
         static Color userChoose = Color.Black;
+        static double epsilon = 100.123456789;
         static float thickness = 1.0f;
         static Point start = new Point(-1000, -1000), end;
         static List<Polygon> lPolygon = new List<Polygon>();
@@ -28,7 +30,7 @@ namespace Lab1T1
         static int mode = 1;
         static Polygon newPolygonItem;
         static Shape newShapeItem;
-        static List<Label> name = new List<Label> ();
+        static List<Label> name = new List<Label>();
         static List<Label> thoigian = new List<Label>();
 
         public Form1()
@@ -122,6 +124,7 @@ namespace Lab1T1
         {
             if (mode == 1)
             {
+                //Khi nhả chuột ở chế độ vẽ hình bình thường
                 isDown = false;
                 end = e.Location;
                 if (newShapeItem != null)
@@ -129,8 +132,9 @@ namespace Lab1T1
                     WriteLog.AddLog(new Log { name = newShapeItem.GetType().ToString().Split('.')[2], dayDraw = DateTime.Now });
                 }
             }
-            if (mode == 3)
+            else if (mode == 3)
             {
+                //Khi nhả chuột ở chế độ vẽ Polygon
                 if (e.Button == MouseButtons.Left)
                 {
                     newPolygonItem.Add(e.Location);
@@ -143,6 +147,13 @@ namespace Lab1T1
                     newPolygonItem = new Polygon();
                     mouseLeft = false;
                 }
+            }
+            else if (mode == 4)
+            {
+                //Khi nhả  chuột ở chế độ chọn hình
+                //Tính khoảng cách tới tất cả các hình, tìm nhỏ nhất, so với epsilon, nếu nhỏ hơn thì hiện hình đó
+                ControlPoint.GetMin(lPolygon, Draw.listDraw, e.Location);
+                ControlPoint.AllowToDraw();
             }
             WriteLog.Render(name, thoigian);
         }
@@ -188,6 +199,11 @@ namespace Lab1T1
         private void modeTo1_Click(object sender, EventArgs e)
         {
             mode = 1;
+        }
+
+        private void chonHinhBtn_Click(object sender, EventArgs e)
+        {
+            mode = 4;
         }
 
         private void equalHexagon_CheckedChanged(object sender, EventArgs e)

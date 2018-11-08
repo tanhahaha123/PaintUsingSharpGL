@@ -5,11 +5,13 @@ using System.Drawing;
 
 namespace Lab1T1.Model
 {
-    class Polygon
+    public class Polygon
     {
         public DateTime thoiGianVe;
         List<Point> point = null;
-        bool isDDK = false;
+        public bool isDDK = false;
+        public double distance;
+
         private void DrawControlPoint(OpenGLControl glControl, Color? color = null)
         {
             var choose = color ?? Color.Red;
@@ -21,6 +23,7 @@ namespace Lab1T1.Model
             gl.End();
             gl.Flush();
         }
+
         public Polygon()
         {
             if (point == null)
@@ -28,9 +31,21 @@ namespace Lab1T1.Model
                 point = new List<Point>();
             }
         }
+
         public void Add(Point a)
         {
             point.Add(a);
+        }
+
+        public void CountDistance(Point mouse)
+        {
+            //Thay vì loop trong này để ở ngoài được hông? Cải tiến?
+            var tmp = new Point(0, 0);
+            point.ForEach(x => { tmp.X += x.X; tmp.Y += x.Y; });
+            tmp.X /= point.Count;
+            tmp.Y /= point.Count;
+
+            distance = Math.Pow(mouse.X - tmp.X, 2) + Math.Pow(mouse.Y - tmp.Y, 2);
         }
 
         public void Draw(OpenGLControl glControl)
@@ -41,7 +56,7 @@ namespace Lab1T1.Model
             point.ForEach(x => gl.Vertex(x.X, glControl.Height - x.Y));
             gl.End();
             gl.Flush();
-            if(isDDK == true)
+            if (isDDK == true)
             {
                 DrawControlPoint(glControl);
             }
