@@ -1,4 +1,5 @@
-﻿using SharpGL;
+﻿using Lab1T1.Helper;
+using SharpGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,13 +15,16 @@ namespace Lab1T1.Model
         {
             upLeft = a;
             downRight = b;
+            thoiGianVe = DateTime.Now;
             this.thickness = thickness;
             this.userChoose = userChoose;
+            center.X = (upLeft.X + downRight.X) / 2;
+            center.Y = (upLeft.Y + downRight.Y) / 2;
         }
 
         public override void DrawControlPoint(OpenGLControl glControl, Color? color = null)
         {
-            Color choose = color ?? Color.HotPink;
+            Color choose = color ?? Color.Red;
             var gl = glControl.OpenGL;
             gl.Color(choose.R / 255.0, choose.G / 255.0, choose.B / 255.0);
             gl.PointSize(5f);
@@ -34,8 +38,9 @@ namespace Lab1T1.Model
         public override void Draw(OpenGLControl glControl)
         {
             base.Draw(glControl);
-            timeCreate = DateTime.Now;
             var gl = glControl.OpenGL;
+            gl.PushMatrix();
+            Affine.Rotate(center, gocXoay, glControl.OpenGL);
             gl.Begin(OpenGL.GL_LINES);
             gl.Vertex(upLeft.X, glControl.Height - upLeft.Y);
             gl.Vertex(downRight.X, glControl.Height - downRight.Y);
@@ -44,6 +49,7 @@ namespace Lab1T1.Model
             {
                 DrawControlPoint(glControl);
             }
+            gl.PopMatrix();
         }
     }
 

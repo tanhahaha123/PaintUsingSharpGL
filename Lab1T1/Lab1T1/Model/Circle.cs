@@ -1,4 +1,5 @@
-﻿using SharpGL;
+﻿using Lab1T1.Helper;
+using SharpGL;
 using System;
 using System.Drawing;
 
@@ -6,7 +7,7 @@ namespace Lab1T1.Model
 {
     public class Circle : Shape
     {
-        public Point start, center;
+        public Point start;
         public long tmpX2, tmpY2;
         public double p;
         public int radius;
@@ -50,6 +51,7 @@ namespace Lab1T1.Model
                 }
             }
 
+            thoiGianVe = DateTime.Now;
             upLeft = a;
             downRight = b;
             this.thickness = thickness;
@@ -62,6 +64,7 @@ namespace Lab1T1.Model
             center = new Point(xCenter, yCenter);
             PrepareData();
         }
+
         public override void Draw(OpenGLControl glControl)
         {
             //Prepare data
@@ -74,18 +77,22 @@ namespace Lab1T1.Model
             base.Draw(glControl);
             int k = 0;
             var gl = glControl.OpenGL;
+            gl.PushMatrix();
+            Affine.Rotate(center, gocXoay, glControl.OpenGL);
             gl.PointSize(thickness);
             gl.Begin(OpenGL.GL_POINTS);
             while (true)
             {
                 if (start.X > start.Y)
                 {
+                    //Khi vẽ xong hình tròn
                     gl.End();
                     gl.Flush();
                     if (veDdk == true)
                     {
                         DrawControlPoint(glControl);
                     }
+                    gl.PopMatrix();
                     return;
                 }
                 //Vẽ điểm cũ,  và 7 điểm đối xứng của nó
@@ -111,7 +118,6 @@ namespace Lab1T1.Model
                 }
                 k++;
             }
-
         }
     }
 }

@@ -10,18 +10,20 @@ namespace Lab1T1.Helper
 {
     public class ControlPoint
     {
-        public static Shape minShape = null;
-        public static Polygon minPolygon = null;
+        // minShape và minPolygon để tracking coi có shape nào hoặc polygon nào đang cho hiện điểm điều khiển và thao tác trên hình đó
+        public static Shape minShape;
+        public static Polygon minPolygon;
 
         public static void GetMin(List<Polygon> a, Stack<Shape> b, Point mouse)
         {
+            minShape = null;
+            minPolygon = null;
             b.ToList().ForEach(x => x.CountDistance(mouse));
             a.ForEach(x => x.CountDistance(mouse));
             if (b.Count != 0)
             {
                 minShape = b.Peek();
             }
-            
             if (a.Count != 0)
             {
                 minPolygon = a[0];
@@ -35,7 +37,7 @@ namespace Lab1T1.Helper
                     minPolygon = a[i];
                 }
             }
-            // Tìm min distance của 
+            // Tìm min distance của Shape
             foreach (var k in b)
             {
                 k.veDdk = false;
@@ -63,12 +65,12 @@ namespace Lab1T1.Helper
             {
                 minPolygon.isDDK = true;
             }
+            else { minPolygon = null; }
             if(minShape != null && minShape.distance < epsilon * epsilon)
             {
                 minShape.veDdk = true;
             }
-            minPolygon = null;
-            minShape = null;
+            else { minShape = null; }
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Lab1T1.Model
     {
         public EqualTriangle(Point a, Point b, float thickness, Color userChoose)
         {
+            thoiGianVe = DateTime.Now;
             upLeft = a;
             downRight = b;
             this.thickness = thickness;
@@ -22,7 +23,7 @@ namespace Lab1T1.Model
         public override void DrawControlPoint(OpenGLControl glControl, Color? color = null)
         {
             var upRight = new Point(downRight.X, upLeft.Y);
-            Color choose = color ?? Color.HotPink;
+            Color choose = color ?? Color.Red;
             var gl = glControl.OpenGL;
             gl.Color(choose.R / 255.0, choose.G / 255.0, choose.B / 255.0);
             gl.PointSize(5f);

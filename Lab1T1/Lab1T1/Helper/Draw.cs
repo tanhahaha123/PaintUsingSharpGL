@@ -50,7 +50,11 @@ namespace Lab1T1.Helper
                 if (listDraw.Count > 0)
                 {
                     var tmpPop = listDraw.Pop();
-                    if (tmpPop.upLeft != imgToDraw.upLeft)
+                    if (tmpPop.upLeft == imgToDraw.upLeft && tmpPop.GetType() == imgToDraw.GetType())
+                    {
+                        imgToDraw.thoiGianVe = tmpPop.thoiGianVe;
+                    }
+                    else
                     {
                         listDraw.Push(tmpPop);
                     }

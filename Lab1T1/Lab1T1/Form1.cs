@@ -4,7 +4,6 @@ using SharpGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Lab1T1
@@ -12,7 +11,7 @@ namespace Lab1T1
     public partial class Form1 : Form
     {
         static Color userChoose = Color.Black;
-        static double epsilon = 100.123456789;
+        public static double _epsilon = 100.123456789;
         static float thickness = 1.0f;
         static Point start = new Point(-1000, -1000), end;
         static List<Polygon> lPolygon = new List<Polygon>();
@@ -32,6 +31,7 @@ namespace Lab1T1
         static Shape newShapeItem;
         static List<Label> name = new List<Label>();
         static List<Label> thoigian = new List<Label>();
+        static Point oldMousePoint = new Point(-1000, -1000);
 
         public Form1()
         {
@@ -97,6 +97,10 @@ namespace Lab1T1
                     newPolygonItem.Draw(openGLControl);
                 }
             }
+            else if (mode == 4)
+            {
+
+            }
             lPolygon.ForEach(x => x.Draw(openGLControl));
             Draw.ThucHienVe(openGLControl);
         }
@@ -112,25 +116,52 @@ namespace Lab1T1
 
         private void openGLControl_MouseDown(object sender, MouseEventArgs e)
         {
-            if (mode == 1)
+            if (mode == 1 && e.Button == MouseButtons.Left)
             {
+                //Click chuột trái ở chế độ vẽ hình
                 start = e.Location;
                 end = start;
                 isDown = true;
+            }
+            if (mode == 4)
+            {
+                //Tịnh tiến hình
+                if (ControlPoint.minPolygon != null)
+                {
+                    //Nếu khoảng cách từ mouse tới hình lớn hơn epsilon thì ko set oldMouse
+                    Point tmpCenter = ControlPoint.minPolygon.center;
+                    double tmpDistance = Math.Pow(tmpCenter.X - e.Location.X, 2) + Math.Pow(tmpCenter.Y - e.Location.Y, 2);
+                    if (tmpDistance <= _epsilon * _epsilon)
+                    {
+                        oldMousePoint = e.Location;
+                        isDown = true;
+                    }
+                }
+                else if (ControlPoint.minShape != null)
+                {
+                    //Nếu khoảng cách từ mouse tới hình lớn hơn epsilon thì ko set oldMouse
+                    double tmpDistance = Math.Pow(ControlPoint.minShape.center.X - e.Location.X, 2) + Math.Pow(ControlPoint.minShape.center.Y - e.Location.Y, 2);
+                    if (tmpDistance <= _epsilon * _epsilon)
+                    {
+                        oldMousePoint = e.Location;
+                        isDown = true;
+                    }
+                }
             }
         }
 
         private void openGLControl_MouseUp(object sender, MouseEventArgs e)
         {
-            if (mode == 1)
+            if (mode == 1 && e.Button == MouseButtons.Left)
             {
-                //Khi nhả chuột ở chế độ vẽ hình bình thường
+                //Khi nhả chuột trái ở chế độ vẽ hình bình thường
                 isDown = false;
                 end = e.Location;
                 if (newShapeItem != null)
                 {
-                    WriteLog.AddLog(new Log { name = newShapeItem.GetType().ToString().Split('.')[2], dayDraw = DateTime.Now });
+                    WriteLog.AddLog(new Log { name = newShapeItem.GetType().ToString().Split('.')[2], dayDraw = DateTime.Now, timeToDraw = newShapeItem.thoiGianVe });
                 }
+                WriteLog.Render(name, thoigian);
             }
             else if (mode == 3)
             {
@@ -143,19 +174,35 @@ namespace Lab1T1
                 else
                 {
                     lPolygon.Add(newPolygonItem);
-                    WriteLog.AddLog(new Log { name = "Polygon", dayDraw = DateTime.Now });
+                    WriteLog.AddLog(new Log { name = "Polygon", dayDraw = DateTime.Now, timeToDraw = newPolygonItem.thoiGianVe });
                     newPolygonItem = new Polygon();
                     mouseLeft = false;
                 }
+                WriteLog.Render(name, thoigian);
             }
             else if (mode == 4)
             {
                 //Khi nhả  chuột ở chế độ chọn hình
                 //Tính khoảng cách tới tất cả các hình, tìm nhỏ nhất, so với epsilon, nếu nhỏ hơn thì hiện hình đó
                 ControlPoint.GetMin(lPolygon, Draw.listDraw, e.Location);
-                ControlPoint.AllowToDraw(100.123456789);
+                ControlPoint.AllowToDraw(_epsilon);
+
+                //Khi bấm ra ngoài hoặc bấm vào hình khác thì hủy old Mouse để tránh bị delay
+                if(ControlPoint.minPolygon == null && ControlPoint.minShape == null)
+                {
+                    oldMousePoint.X = -1000;
+                }
+
+                if (ControlPoint.minPolygon != null && oldMousePoint.X != -1000)
+                {
+                    Affine.TinhTien(ControlPoint.minPolygon, new Point(e.Location.X - oldMousePoint.X, e.Location.Y - oldMousePoint.Y));
+                }
+                if (ControlPoint.minShape != null && oldMousePoint.X != -1000)
+                {
+                    Affine.TinhTien(ControlPoint.minShape, new Point(e.Location.X - oldMousePoint.X, e.Location.Y - oldMousePoint.Y));
+                }
+                isDown = false;
             }
-            WriteLog.Render(name, thoigian);
         }
 
         private void openGLControl_MouseMove(object sender, MouseEventArgs e)
@@ -163,6 +210,25 @@ namespace Lab1T1
             if (isDown == true && mode == 1)
             {
                 end = e.Location;
+            }
+            if (mode == 4 && isDown == true)
+            {
+                if (ControlPoint.minPolygon != null)
+                {
+                    if (oldMousePoint.X != -1000)
+                    {
+                        Affine.TinhTien(ControlPoint.minPolygon, new Point(e.Location.X - oldMousePoint.X, e.Location.Y - oldMousePoint.Y));
+                        oldMousePoint = e.Location;
+                    }
+                }
+                else //minShape != null
+                {
+                    if (oldMousePoint.X != -1000)
+                    {
+                        Affine.TinhTien(ControlPoint.minShape, new Point(e.Location.X - oldMousePoint.X, e.Location.Y - oldMousePoint.Y));
+                        oldMousePoint = e.Location;
+                    }
+                }
             }
         }
 

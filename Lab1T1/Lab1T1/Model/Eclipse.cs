@@ -1,4 +1,5 @@
-﻿using SharpGL;
+﻿using Lab1T1.Helper;
+using SharpGL;
 using System;
 using System.Drawing;
 
@@ -6,12 +7,11 @@ namespace Lab1T1.Model
 {
     public class Eclipse : Shape
     {
-        public Point center;
         public double radiusX;
         public double radiusY;
-        public Eclipse() { radiusX = -1; radiusY = -1; }
         public Eclipse(Point a, Point b, float thickness, Color userChoose)
         {
+            thoiGianVe = DateTime.Now;
             upLeft = a;
             downRight = b;
             radiusX = -1;
@@ -41,6 +41,8 @@ namespace Lab1T1.Model
             FindRadius();
             var tmpCenterY = glControl.Height - center.Y;
             var gl = glControl.OpenGL;
+            gl.PushMatrix();
+            Affine.Rotate(center, gocXoay, glControl.OpenGL);
             gl.Begin(OpenGL.GL_LINE_LOOP);
             for (double i = 0; i < 360; i += 0.1)
             {
@@ -52,6 +54,7 @@ namespace Lab1T1.Model
             {
                 DrawControlPoint(glControl);
             }
+            gl.PopMatrix();
         }
     }
 

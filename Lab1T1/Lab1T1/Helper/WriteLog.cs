@@ -8,6 +8,7 @@ namespace Lab1T1.Helper
     {
         public DateTime dayDraw;
         public string name;
+        public DateTime timeToDraw;
 
         public static int SoSanh(Log a, Log b)
         {
@@ -44,7 +45,8 @@ namespace Lab1T1.Helper
             foreach (var x in list)
             {
                 name[i].Text = x.name;
-                time[i].Text = x.dayDraw.ToString("hh:mm:ss tt");
+                TimeSpan difference = x.dayDraw - x.timeToDraw;
+                time[i].Text = difference.Duration().ToString(@"mm\:ss\:ff");
                 i++;
             }
         }

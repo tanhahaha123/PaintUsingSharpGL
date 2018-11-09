@@ -1,4 +1,5 @@
 ﻿using SharpGL;
+using System;
 using System.Drawing;
 
 namespace Lab1T1.Model
@@ -9,6 +10,7 @@ namespace Lab1T1.Model
     {
         public EqualHexagon(Point a, Point b, float thickness, Color color)
         {
+            thoiGianVe = DateTime.Now;
             upLeft = a; downRight = b;
             this.thickness = thickness;
             userChoose = color;
@@ -16,7 +18,7 @@ namespace Lab1T1.Model
 
         public override void DrawControlPoint(OpenGLControl glControl, Color? color = null)
         {
-            Color choose = color ?? Color.HotPink;
+            Color choose = color ?? Color.Red;
             var upRight = new Point(downRight.X, upLeft.Y);
             int angle;
             var gl = glControl.OpenGL;

@@ -8,9 +8,10 @@ namespace Lab1T1.Model
     public class Polygon
     {
         public DateTime thoiGianVe;
-        List<Point> point = null;
+        public List<Point> point = null;
         public bool isDDK = false;
         public double distance;
+        public Point center;
 
         private void DrawControlPoint(OpenGLControl glControl, Color? color = null)
         {
@@ -34,18 +35,22 @@ namespace Lab1T1.Model
 
         public void Add(Point a)
         {
+            if(point.Count == 0)
+            {
+                thoiGianVe = DateTime.Now;
+            }
             point.Add(a);
         }
 
         public void CountDistance(Point mouse)
         {
             //Thay vì loop trong này để ở ngoài được hông? Cải tiến?
-            var tmp = new Point(0, 0);
-            point.ForEach(x => { tmp.X += x.X; tmp.Y += x.Y; });
-            tmp.X /= point.Count;
-            tmp.Y /= point.Count;
+            center = new Point(0, 0);
+            point.ForEach(x => { center.X += x.X; center.Y += x.Y; });
+            center.X /= point.Count;
+            center.Y /= point.Count;
 
-            distance = Math.Pow(mouse.X - tmp.X, 2) + Math.Pow(mouse.Y - tmp.Y, 2);
+            distance = Math.Pow(mouse.X - center.X, 2) + Math.Pow(mouse.Y - center.Y, 2);
         }
 
         public void Draw(OpenGLControl glControl)

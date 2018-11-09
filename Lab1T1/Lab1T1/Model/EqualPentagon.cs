@@ -13,6 +13,7 @@ namespace Lab1T1.Model
     {
         public EqualPentagon(Point a, Point b, float thickness, Color color)
         {
+            thoiGianVe = DateTime.Now;
             upLeft = a; downRight = b;
             this.thickness = thickness;
             userChoose = color;
@@ -20,7 +21,7 @@ namespace Lab1T1.Model
 
         public override void DrawControlPoint(OpenGLControl glControl, Color? color = null)
         {
-            Color choose = color ?? Color.HotPink;
+            Color choose = color ?? Color.Red;
             var upRight = new Point(downRight.X, upLeft.Y);
             var gl = glControl.OpenGL;
             gl.Color(choose.R / 255.0, choose.G / 255.0, choose.B / 255.0);
